@@ -131,6 +131,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: ^25.9.1
+        version: 25.9.1
 
   packages/env:
     dependencies:

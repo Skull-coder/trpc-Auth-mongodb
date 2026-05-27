@@ -11,6 +11,15 @@ export class CookieService {
     private res: Response,
   ) {}
 
+  private defaultCookieOptions(maxAge: number): CookieOptions {
+    return {
+      httpOnly: true,
+      secure: envServer.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge,
+    };
+  }
+
   private getCookie(name: string): string | undefined {
     return this.req.cookies?.[name];
   }
@@ -19,19 +28,15 @@ export class CookieService {
     name: string,
     value: string,
     maxAge: number,
-    options: CookieOptions = {}, // Type explicitly using Express types here
+    options: CookieOptions = {},
   ) {
-    const defaultOptions: CookieOptions = {
-      httpOnly: true,
-      secure: envServer.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge,
-    };
+    const defaultOptions: CookieOptions = this.defaultCookieOptions(maxAge);
     this.res.cookie(name, value, { ...defaultOptions, ...options });
   }
 
   private clearCookie(name: string, options: CookieOptions = {}) {
-    this.res.cookie(name, "", { ...options, maxAge: 0 });
+    const defaultOptions: CookieOptions = this.defaultCookieOptions(0);
+    this.res.cookie(name, "", { ...defaultOptions, ...options });
   }
 
   public setAccessToken(token: string) {

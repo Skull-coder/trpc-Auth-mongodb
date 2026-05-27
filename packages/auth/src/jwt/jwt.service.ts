@@ -3,9 +3,9 @@ import {AuthJWTPayload} from "./jwt.types.js"
 import { TRPCError } from "@trpc/server";
 
 export class JWTService {
-    private secretKey: Uint8Array = new TextEncoder().encode(process.env.JWT_SECRET || "bguya12fdwuy13@#wqaudvyqHGHgghc@123424vfy");
+    private secretKey: Uint8Array = new TextEncoder().encode(process.env.JWT_SECRET);
 
-    public async generateToken(payload: AuthJWTPayload, expiresIn: string = "1h"): Promise<string> {
+    public async generateToken(payload: AuthJWTPayload, expiresIn: string = "15m"): Promise<string> {
         const token = await new SignJWT(payload)
             .setProtectedHeader({ alg: "HS256", typ: "JWT" })
             .setExpirationTime(expiresIn)

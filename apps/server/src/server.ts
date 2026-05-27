@@ -27,8 +27,8 @@ app.use(
 
 const { loginLimiter, registerLimiter } = authLimiter();
 
-app.use("/trpc/login", loginLimiter);
-app.use("/trpc/register", registerLimiter);
+app.use("/trpc/auth.login", loginLimiter);
+app.use("/trpc/auth.register", registerLimiter);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
