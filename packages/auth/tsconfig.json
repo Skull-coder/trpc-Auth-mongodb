@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "@repo/typescript-config/base.json"
+    ],
+    "compilerOptions": {
+        "lib": ["es2022", "DOM", "DOM.Iterable"],
+        "types": ["node"]
+    },
+    "include": ["src/"],
+    "ts-node": {
+        "compilerOptions": {
+            "types": ["node"]
+        }
+    }
+}

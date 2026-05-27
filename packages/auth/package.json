@@ -1,0 +1,31 @@
+{
+  "name": "@repo/auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1"
+  },
+  "dependencies": {
+    "@repo/database": "workspace:*",
+    "@repo/redis": "workspace:*",
+    "@repo/trpc": "workspace:*",
+    "@repo/env": "workspace:*",
+    "@trpc/server": "^10.0.0",
+    "argon2": "^0.44.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "jose": "^6.2.3"
+  }
+}

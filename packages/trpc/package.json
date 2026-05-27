@@ -1,0 +1,26 @@
+{
+  "name": "@repo/trpc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@repo/redis": "workspace:*",
+    "@types/express": "^5.0.6"
+  },
+  "dependencies": {
+    "@repo/auth": "workspace:*",
+    "@trpc/client": "^11.17.0",
+    "@trpc/server": "^11.17.0",
+    "trpc-to-openapi": "^3.1.0",
+    "zod": "^4.4.3"
+  }
+}
