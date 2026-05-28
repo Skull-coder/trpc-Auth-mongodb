@@ -11,12 +11,12 @@ export class CookieService {
     private res: Response,
   ) {}
 
-  private defaultCookieOptions(maxAge: number): CookieOptions {
+  private defaultCookieOptions(): CookieOptions {
     return {
       httpOnly: true,
-      secure: envServer.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge,
+      secure: true,
+      sameSite: "none",
+      path: "/",
     };
   }
 
@@ -30,13 +30,13 @@ export class CookieService {
     maxAge: number,
     options: CookieOptions = {},
   ) {
-    const defaultOptions: CookieOptions = this.defaultCookieOptions(maxAge);
-    this.res.cookie(name, value, { ...defaultOptions, ...options });
+    const defaultOptions: CookieOptions = this.defaultCookieOptions();
+    this.res.cookie(name, value, { ...defaultOptions, maxAge, ...options });
   }
 
   private clearCookie(name: string, options: CookieOptions = {}) {
-    const defaultOptions: CookieOptions = this.defaultCookieOptions(0);
-    this.res.cookie(name, "", { ...defaultOptions, ...options });
+    const defaultOptions: CookieOptions = this.defaultCookieOptions();
+    this.res.clearCookie(name, { ...defaultOptions, ...options });
   }
 
   public setAccessToken(token: string) {

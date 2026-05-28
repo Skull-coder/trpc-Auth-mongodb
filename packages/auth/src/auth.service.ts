@@ -126,8 +126,17 @@ export class AuthService {
     accessToken: string,
     refreshToken: string,
   ): Promise<AuthServiceOutput<null>> {
+    const decodedToken = await jwt.verifyToken(accessToken);
+
+    const jti = decodedToken.jti;
+
+    const ttlSeconds = Math.max(
+      1,
+      decodedToken.exp - Math.floor(Date.now() / 1000),
+    );
+
     // Blacklist access token
-    await redis.set(`bl:${accessToken}`, "1", "EX", 60 * 15);
+    await redis.set(`bl:${jti}`, "1", "EX", ttlSeconds);
 
     // Remove refresh token from Redis
     await redis.del(`refresh_token:${refreshToken}`);
