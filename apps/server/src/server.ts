@@ -15,7 +15,17 @@ import { envServer } from "@repo/env/server.js";
 import helmet from "helmet";
 
 const app = express();
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  }),
+);
 const port = envServer.PORT;
 const MONGODB_URI = envServer.MONGODB_URI;
 const FRONTEND_URL = envServer.FRONTEND_URL;
@@ -50,7 +60,7 @@ app.use(
 const openApiDocument = generateOpenApiDocument(authRouter, {
   title: "Auth API",
   version: "1.0.0",
-  baseUrl: `http://localhost:${port}/api`,
+  baseUrl: `/api`,
 });
 app.use(
   "/api",
@@ -64,7 +74,10 @@ app.use(
   "/docs",
   apiReference({
     content: openApiDocument,
-    theme: "moon"
+    theme: "moon",
+    authentication:{
+      preferredSecurityScheme: "cookieAuth",
+    }
   }),
 );
 
