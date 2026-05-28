@@ -1,5 +1,6 @@
 // packages/redis/src/redis.ts
-import Redis, { RedisOptions } from "ioredis";
+import { Redis } from "ioredis";
+import type { RedisOptions } from "ioredis";
 
 const redisOptions: RedisOptions = {
   // 1. Dynamic Configuration via Environment Variables

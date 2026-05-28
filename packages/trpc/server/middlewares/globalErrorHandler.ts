@@ -1,4 +1,4 @@
-import { t } from "./trpc.js";
+import { t } from "../../trpc.js";
 import { TRPCError } from "@trpc/server";
 
 export const globalErrorHandler = t.middleware(async ({ ctx, next, path }) => {

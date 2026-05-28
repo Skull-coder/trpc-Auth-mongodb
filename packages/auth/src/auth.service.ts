@@ -17,7 +17,7 @@ import type {
   RefreshAuthOutput,
   GetUserAuthOutput,
 } from "./interfaces/auth.interface.js";
-import { redis } from "@repo/redis/src/redis.js";
+import redis from "@repo/redis/src/redis.js";
 import { TRPCError } from "@trpc/server";
 
 const jwt = new JWTService();

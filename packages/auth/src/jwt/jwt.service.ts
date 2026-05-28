@@ -1,9 +1,10 @@
 import {SignJWT, jwtVerify} from "jose"
 import {AuthJWTPayload} from "./jwt.types.js"
 import { TRPCError } from "@trpc/server";
+import { envServer } from "@repo/env/server.js";
 
 export class JWTService {
-    private secretKey: Uint8Array = new TextEncoder().encode(process.env.JWT_SECRET);
+    private secretKey: Uint8Array = new TextEncoder().encode(envServer.JWT_SECRET);
 
     public async generateToken(payload: AuthJWTPayload, expiresIn: string = "15m"): Promise<string> {
         const token = await new SignJWT(payload)
