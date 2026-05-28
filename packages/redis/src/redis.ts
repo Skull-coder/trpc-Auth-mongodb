@@ -1,12 +1,12 @@
-// packages/redis/src/redis.ts
 import { Redis } from "ioredis";
 import type { RedisOptions } from "ioredis";
+import { envServer } from "@repo/env/server.js";
 
 const redisOptions: RedisOptions = {
   // 1. Dynamic Configuration via Environment Variables
-  host: process.env.REDIS_HOST || "127.0.0.1",
-  port: parseInt(process.env.REDIS_PORT || "6379", 10),
-  password: process.env.REDIS_PASSWORD, 
+  host: envServer.REDIS_HOST,
+  port: parseInt(envServer.REDIS_PORT, 10),
+  password: envServer.REDIS_PASSWORD,
 
   // 2. Reconnection Strategy (Exponential Backoff)
   retryStrategy(times) {

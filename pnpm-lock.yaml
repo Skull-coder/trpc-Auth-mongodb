@@ -198,6 +198,9 @@ importers:
 
   packages/redis:
     dependencies:
+      '@repo/env':
+        specifier: workspace:*
+        version: link:../env
       ioredis:
         specifier: ^5.10.1
         version: 5.10.1
