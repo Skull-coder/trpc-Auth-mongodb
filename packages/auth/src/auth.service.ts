@@ -163,11 +163,18 @@ export class AuthService {
       await this.generateAccessAndRefreshTokens(userId);
 
     // Store new refresh token in Redis and delete old one
-    await redis
+    const result = await redis
       .multi()
       .set(`refresh_token:${newRefreshToken}`, userId, "EX", 60 * 60 * 24 * 7) // Expire in 7 days
       .del(`refresh_token:${refreshToken}`)
       .exec();
+
+    if (!result || result.some(([error]) => error !== null)) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Refresh token rotation failed",
+      });
+    }
 
     return {
       success: true,
