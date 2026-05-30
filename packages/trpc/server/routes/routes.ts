@@ -111,7 +111,7 @@ export const authRouter = router({
       };
     }),
 
-  refresh: authenticatedProcedure
+  refresh: publicProcedure
     .meta({
       openapi: {
         method: "POST",
