@@ -13,12 +13,9 @@ import {
 } from "trpc-to-openapi";
 import { envServer } from "@repo/env/server.js";
 import helmet from "helmet";
-
-const ACCESS_TOKEN = envServer.ACCESS_TOKEN;
-const REFRESH_TOKEN = envServer.REFRESH_TOKEN;
+import { shutdown } from "./utils/shutdown.js";
 
 const app = express();
-app.use(express.json());
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -95,6 +92,9 @@ app.use(
 
 await connectToDatabase(MONGODB_URI);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+process.on("SIGINT", () => shutdown(server, "SIGINT"));
+process.on("SIGTERM", () => shutdown(server, "SIGTERM"));
