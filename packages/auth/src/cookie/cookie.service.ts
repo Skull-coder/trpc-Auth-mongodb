@@ -1,5 +1,5 @@
 import type { Request, Response, CookieOptions } from "express";
-import {envServer} from "@repo/env/server.js";
+import { envServer } from "@repo/env/server.js";
 
 const ACCESS_TOKEN = envServer.ACCESS_TOKEN;
 const REFRESH_TOKEN = envServer.REFRESH_TOKEN;
@@ -12,10 +12,11 @@ export class CookieService {
   ) {}
 
   private defaultCookieOptions(): CookieOptions {
+    const isProduction = envServer.NODE_ENV === "production";
     return {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProduction, // false in dev
+      sameSite: isProduction ? "none" : "lax", // lax in dev
       path: "/",
     };
   }

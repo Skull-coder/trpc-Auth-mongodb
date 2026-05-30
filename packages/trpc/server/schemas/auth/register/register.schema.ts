@@ -11,7 +11,7 @@ export const registerOutputSchema = authOutputScehma.extend({
     data: z.object({
         id: z.string(),
         username: z.string(),
-        email: z.string().email(),
+        email: z.email(),
     })
 })
 

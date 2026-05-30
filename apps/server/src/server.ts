@@ -13,11 +13,12 @@ import {
 } from "trpc-to-openapi";
 import { envServer } from "@repo/env/server.js";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize";
+
+const ACCESS_TOKEN = envServer.ACCESS_TOKEN;
+const REFRESH_TOKEN = envServer.REFRESH_TOKEN;
 
 const app = express();
 app.use(express.json());
-app.use(mongoSanitize());
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -60,10 +61,16 @@ app.use(
     createContext,
   }),
 );
+app.use("/api", (req, res, next) => {
+  if (!req.headers["content-type"]) {
+    req.headers["content-type"] = "application/json";
+  }
+  next();
+});
 const openApiDocument = generateOpenApiDocument(authRouter, {
   title: "Auth API",
   version: "1.0.0",
-  baseUrl: `/api`,
+  baseUrl: "/api",
 });
 app.use(
   "/api",
@@ -78,9 +85,6 @@ app.use(
   apiReference({
     content: openApiDocument,
     theme: "moon",
-    authentication:{
-      preferredSecurityScheme: "cookieAuth",
-    }
   }),
 );
 
