@@ -13,8 +13,11 @@ import {
 } from "trpc-to-openapi";
 import { envServer } from "@repo/env/server.js";
 import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 const app = express();
+app.use(express.json());
+app.use(mongoSanitize());
 app.use(
   helmet({
     contentSecurityPolicy: {
