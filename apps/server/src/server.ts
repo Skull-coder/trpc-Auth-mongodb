@@ -49,9 +49,14 @@ const registerLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // limit each IP to 5 requests per windowMs
 });
+const refreshLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // limit each IP to 30 requests per windowMs
+});
 
 app.use("/trpc/auth.login", loginLimiter);
 app.use("/trpc/auth.register", registerLimiter);
+app.use("/trpc/auth.refresh", refreshLimiter);
 app.use(express.json());
 app.use(cookieParser());
 app.use(

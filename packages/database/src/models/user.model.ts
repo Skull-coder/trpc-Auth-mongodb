@@ -22,6 +22,6 @@ export const UserSchema = new mongoose.Schema<IUser>({
         required: true,
         select: false,
     }
-});
+},{timestamps: true});
 
 export default mongoose.model<IUser>("User", UserSchema);
