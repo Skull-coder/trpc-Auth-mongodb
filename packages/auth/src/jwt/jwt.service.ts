@@ -6,7 +6,7 @@ import { envServer } from "@repo/env/server.js";
 export class JWTService {
     private secretKey: Uint8Array = new TextEncoder().encode(envServer.JWT_SECRET);
 
-    public async generateToken(payload: TokenGenerationInput, expiresIn: string = "15m"): Promise<string> {
+    public async generateToken(payload: TokenGenerationInput, expiresIn: string = "2m"): Promise<string> {
         const token = await new SignJWT(payload)
             .setJti(crypto.randomUUID())
             .setProtectedHeader({ alg: "HS256", typ: "JWT" })

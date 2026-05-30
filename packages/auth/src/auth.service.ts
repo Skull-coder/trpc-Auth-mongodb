@@ -131,9 +131,16 @@ export class AuthService {
     const jti = decodedToken.jti;
 
     const ttlSeconds = Math.max(
-      1,
+      0,
       decodedToken.exp - Math.floor(Date.now() / 1000),
     );
+
+    if(ttlSeconds <= 0) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Token already expired",
+      });
+    }
 
     // Blacklist access token
     await redis.set(`bl:${jti}`, "1", "EX", ttlSeconds);
